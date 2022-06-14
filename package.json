@@ -22,6 +22,10 @@
         "type": "git",
         "url": "https://github.com/vladimir-plakhotnik/shape-builder.git"
     },
+    "bugs": {
+        "url": "https://github.com/vladimir-plakhotnik/shape-builder/issues"
+    },
+    "homepage": "https://github.com/vladimir-plakhotnik/shape-builder",
     "scripts": {
         "start": "ws",
         "build": "npm run lint-code && npm run start-rollup && npm run types && npm run lint-types",
