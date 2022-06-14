@@ -1,0 +1,35 @@
+:root {
+    --canvas-width: 300px;
+    --canvas-height: 300px;
+}
+
+.row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+.column {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.column > canvas {
+    width: var(--canvas-width);
+    height: var(--canvas-height);
+}
+
+.column > pre > code {
+    width: calc(var(--canvas-width) * 2);
+    white-space: pre-line;
+
+}
+
+.column > .header {
+    color: rgb(103, 83, 83);
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

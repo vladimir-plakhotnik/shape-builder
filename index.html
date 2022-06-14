@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <link rel="stylesheet" href="public/styles.css">
+    <title>Welcome to shape-builder.js</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="column">
+                <h1>Logo</h1>
+            </div> 
+        </div>
+
+        <div class="row" >
+            <div class="column">
+                <div class="header">Canvas</div>
+                <canvas id="logo-canvas"></canvas>
+            </div>
+            <div class="column">
+                <div class="header">SVG</div>
+                <div id="logo-svg"></div>
+            </div>
+            <div class="column">
+                <div class="header">SVG code</div>
+                <pre><code class="language-html" id="logo-svg-code"></code></pre>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <h1>Sine</h1>
+            </div> 
+        </div>
+
+        <div class="row">            
+            <div class="column">
+                <div class="header">Canvas</div>
+                <canvas id="sine-canvas"></canvas>
+            </div>
+            <div class="column">
+                <div class="header">SVG</div>
+                <div id ="sine-svg"></div>
+            </div>
+            <div class="column">
+                <div class="header">SVG code</div>
+                <pre><code class="language-html" id="sine-svg-code"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        
+        import logo from "../public/logo.js";
+        import sine from "../public/sine.js";
+
+        logo(
+            document.getElementById("logo-canvas").getContext("2d"), 
+            document.getElementById("logo-svg"),
+            document.getElementById("logo-svg-code"),
+        );
+
+        sine(
+            document.getElementById("sine-canvas").getContext("2d"), 
+            document.getElementById("sine-svg"),
+            document.getElementById("sine-svg-code"),
+        );
+
+        hljs.highlightAll();
+
+    </script>
+</body>
+</html>
