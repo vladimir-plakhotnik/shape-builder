@@ -6,8 +6,6 @@ A library to draw shapes and text in JavaScript.
 
 ## Install
 
----
-
 ```Bash
 npm install shape-builder
 # or
@@ -20,8 +18,6 @@ The `dist` folder of this package contains files:
 - **shape-builder.node.js**. For running in Node.
 
 ## Usage
-
----
 
 ```JavaScript
 import { Point, Rectangle, Builder } from "shape-builder";
@@ -62,8 +58,6 @@ npm start
 ```
 
 ## Shapes
-
----
 
 The current version includes the following shapes:
 
@@ -154,7 +148,5 @@ Text(
 ```
 
 ## License (MIT)
-
----
 
 See [License File](LICENSE).
