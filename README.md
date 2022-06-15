@@ -50,7 +50,7 @@ builder.draw(context);
 // Or use SVG
 const playground = document.getElementById("playground");
 
-const playground.innerHTML = builder.draw(
+playground.innerHTML = builder.draw(
     playground.getClientRects()[0].width, 
     playground.getClientRects()[0].height
 );
