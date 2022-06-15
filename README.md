@@ -21,8 +21,64 @@ The `dist` folder of this package contains files:
 
 ```JavaScript
 import { Point, Rectangle, Builder } from "shape-builder";
-// or node
-// const { Point, Rectangle, Builder } = require("shape-builder");
+
+// Add a shapes to a shape array
+const shapes = [];
+
+shapes.push(
+    new Rectangle(new Point(0, 0), 300, 300, {
+        fillColor: "lightskyblue",
+    })
+);
+
+shapes.push(
+    new Rectangle(new Point(10, 10), 180, 180, {
+        fillColor: "yellow",
+        borderColor: "orange",
+    })
+);
+
+// Create a shape builder
+const builder = new Builder(shapes);
+
+// Get context
+const context = document.getElementById("canvas").getContext("2d");
+
+// Drawing shapes with canvas
+builder.draw(context);
+
+// Or use SVG
+const playground = document.getElementById("playground");
+
+const playground.innerHTML = builder.draw(
+    playground.getClientRects()[0].width, 
+    playground.getClientRects()[0].height
+);
+
+```
+
+See more examples in [`index.html`](index.html). To view the page in a browser, please clone the repo and run a server:
+
+```bash
+npm start
+```
+
+## Running in Node.js
+
+You need to install an additional package [`node-canvas`](https://github.com/Automattic/node-canvas) to run the `shape-builder` in Node.js.
+
+```Bash
+npm install canvas
+```
+
+The following code shows an example of usage the `node-canvas` and the `shape-builder` in Node.js.
+
+```JavaScript
+const { createCanvas } = require("canvas");
+const { Point, Rectangle, Builder } = require("shape-builder");
+
+const canvas = createCanvas(400, 400);
+const context = canvas.getContext("2d");
 
 // Add a shapes to a shape array
 const shapes = [];
@@ -46,15 +102,13 @@ const builder = new Builder(shapes);
 // Drawing shapes with canvas
 builder.draw(context);
 
-// Using SVG
-const svg = builder.draw(width, height);
+console.log('<img src="' + canvas.toDataURL() + '" />');
 
-```
+// Or use SVG
+const svg = builder.draw(500, 500);
 
-See more examples in [`index.html`](index.html). To view the page in a browser, please run a server:
+console.log(svg);
 
-```bash
-npm start
 ```
 
 ## Shapes

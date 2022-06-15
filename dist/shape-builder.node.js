@@ -348,7 +348,7 @@ var Builder = /** @class */ (function () {
         this.shapes = shapes;
     }
     Builder.prototype.draw = function (width, height) {
-        if (width instanceof CanvasRenderingContext2D) {
+        if (typeof width === "function" || typeof width === "object") {
             return drawingContext(width, this);
         }
         if (typeof width === "number" && typeof height === "number") {
