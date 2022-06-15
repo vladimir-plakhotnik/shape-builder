@@ -23,7 +23,7 @@ export default class Builder implements IBuilder {
     draw(width: number, height: number): string;
     draw(context: CanvasRenderingContext2D): void;
     draw(width: number | CanvasRenderingContext2D, height?: number): string | void {
-
+        
         if (typeof width === "function" ||  typeof width === "object") {
             return drawingContext(width, this);
         }

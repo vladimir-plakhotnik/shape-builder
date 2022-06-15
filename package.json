@@ -1,12 +1,13 @@
 {
     "name": "shape-builder",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A library to draw shapes and text in JavaScript.",
     "main": "dist/shape-builder.node.js",
     "browser": "dist/shape-builder.min.js",
     "files": [
         "dist",
         "types/index.d.ts",
+        "types/models/",
         "README.md",
         "LICENSE"
     ],
