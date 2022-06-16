@@ -57,7 +57,7 @@ playground.innerHTML = builder.draw(
 
 ```
 
-You can draw a shape with a canvas without creating a builder:
+You can draw a shape without creating the shape builder:
 
 ```JavaScript
 
@@ -211,6 +211,25 @@ Text(
         rotate?: number;
     }
 )
+```
+
+To mesure a text you can use the `measureText` method. This static method returns the [`TextMetrics`](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) interface.
+
+```JavaScript
+Text.measureText(
+    context: CanvasRenderingContext2D,
+    text: string,
+    font?: {
+        family?: string,
+        size?: string,
+        weight?: string,
+        style?: string,
+        kerning?: CanvasFontKerning,
+        stretch?: CanvasFontStretch,
+        variant?: CanvasFontVariantCaps,
+        lineHeight?: string
+    }
+);
 ```
 
 ## License (MIT)

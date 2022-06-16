@@ -151,4 +151,22 @@ export default class Text implements IDraw {
         return context ? drawingContext(context, this) : svg(this);
     }
     
+    static measureText(
+        context: CanvasRenderingContext2D,
+        text: string,
+        font?: IFontStyle
+    ): TextMetrics {
+        if (font) {
+            context.save();
+            context.font = fontStyleToString(font);
+        }
+
+        const result = context.measureText(text);
+
+        if (font) {
+            context.restore();
+        }
+        
+        return result;
+    }
 }

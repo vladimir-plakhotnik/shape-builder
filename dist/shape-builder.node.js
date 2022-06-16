@@ -332,6 +332,17 @@ var Text = /** @class */ (function () {
     Text.prototype.draw = function (context) {
         return context ? drawingContext$1(context, this) : svg$1(this);
     };
+    Text.measureText = function (context, text, font) {
+        if (font) {
+            context.save();
+            context.font = fontStyleToString(font);
+        }
+        var result = context.measureText(text);
+        if (font) {
+            context.restore();
+        }
+        return result;
+    };
     return Text;
 }());
 
