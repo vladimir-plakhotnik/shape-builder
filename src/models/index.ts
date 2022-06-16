@@ -1,4 +1,6 @@
 export { IDraw } from "./IDraw";
+export { IBuilder } from "./Builder";
+export { IFontStyle } from "./Text";
 export { default as Point } from "./Point";
 export { default as Line } from "./Line";
 export { default as Curve } from "./Curve";

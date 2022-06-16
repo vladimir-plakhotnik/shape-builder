@@ -11,8 +11,7 @@ function svg(width: number, height: number, builder: Builder): string {
 
     return `<svg width="${width}" height="${height}">${elements.join("\n")}</svg>`;
 }
-
-interface IBuilder {
+export interface IBuilder {
     draw(width: number, height: number): string;
     draw(context: CanvasRenderingContext2D): void;
 }

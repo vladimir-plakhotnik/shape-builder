@@ -57,6 +57,18 @@ playground.innerHTML = builder.draw(
 
 ```
 
+You can draw a shape with a canvas without creating a builder:
+
+```JavaScript
+
+new Rectangle(new Point(0, 0), 300, 300, {
+    fillColor: "lightskyblue",
+}).draw(context);
+
+```
+
+The `Point` object is used to set a coordinate point. The image coordinates are counted from the top-left corner.
+
 See more examples in [`index.html`](index.html). To view the page in a browser, please clone the repo and run a server:
 
 ```bash
