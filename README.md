@@ -235,7 +235,7 @@ Text.measure(
 To fit text into a box use the `fitIntoBox` method. This static method returns a font size in pixels to fill in the box.
 
 ```JavaScript
-fitIntoBox(
+Text.fitIntoBox(
     context: CanvasRenderingContext2D,
     text: string,
     boxSize: { width: number, height: number },

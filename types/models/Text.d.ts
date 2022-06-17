@@ -33,5 +33,9 @@ export default class Text implements IDraw {
     });
     draw(): string;
     draw(context: CanvasRenderingContext2D): void;
-    static measureText(context: CanvasRenderingContext2D, text: string, font?: IFontStyle): TextMetrics;
+    static measure(context: CanvasRenderingContext2D, text: string, font?: IFontStyle): TextMetrics;
+    static fitIntoBox(context: CanvasRenderingContext2D, text: string, boxSize: {
+        width: number;
+        height: number;
+    }, font?: IFontStyle): number;
 }

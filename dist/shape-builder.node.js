@@ -332,7 +332,7 @@ var Text = /** @class */ (function () {
     Text.prototype.draw = function (context) {
         return context ? drawingContext$1(context, this) : svg$1(this);
     };
-    Text.measureText = function (context, text, font) {
+    Text.measure = function (context, text, font) {
         if (font) {
             context.save();
             context.font = fontStyleToString(font);
@@ -342,6 +342,46 @@ var Text = /** @class */ (function () {
             context.restore();
         }
         return result;
+    };
+    Text.fitIntoBox = function (context, text, boxSize, font) {
+        context.save();
+        if (font) {
+            context.font = fontStyleToString(font);
+        }
+        var fontString = context.font.split(" ");
+        var index = fontString.findIndex(function (item) { return /\d+px/.test(item.trim()); });
+        if (index === -1) {
+            throw new Error("Font size does not found in an image context");
+        }
+        var number = parseInt(fontString[index]);
+        if (!number) {
+            throw new Error("Font size does not found in an image context");
+        }
+        var updateFont = function () {
+            fontString[index] = "".concat(number, "px");
+            context.font = fontString.join(" ");
+        };
+        var getTextWidth = function (text) { return context.measureText(text).width; };
+        var getTextHeight = function (text) { return context.measureText(text).actualBoundingBoxAscent + context.measureText(text).actualBoundingBoxDescent; };
+        if (getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {
+            // decrease            
+            while (getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {
+                number--;
+                updateFont();
+            }
+        }
+        else {
+            // increase
+            while (getTextWidth(text) < boxSize.width && getTextHeight(text) < boxSize.height) {
+                number++;
+                updateFont();
+            }
+            if (getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {
+                number--;
+            }
+        }
+        context.restore();
+        return number;
     };
     return Text;
 }());
