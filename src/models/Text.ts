@@ -151,7 +151,7 @@ export default class Text implements IDraw {
         return context ? drawingContext(context, this) : svg(this);
     }
     
-    static measureText(
+    static measure(
         context: CanvasRenderingContext2D,
         text: string,
         font?: IFontStyle
@@ -168,5 +168,62 @@ export default class Text implements IDraw {
         }
         
         return result;
+    }
+
+    static fitIntoBox(
+        context: CanvasRenderingContext2D,
+        text: string,
+        boxSize: { width: number, height: number },
+        font?: IFontStyle
+    ): number {
+        context.save();
+    
+        if (font) {
+            context.font = fontStyleToString(font);
+        }
+
+        const fontString = context.font.split(" ");
+
+        const index = fontString.findIndex(item => /\d+px/.test(item.trim()));
+
+        if (index === -1) {
+            throw new Error("Font size does not found in an image context");
+        }
+        
+        let number = parseInt(fontString[index]);
+    
+        if (!number) {
+            throw new Error("Font size does not found in an image context");
+        }
+
+        const updateFont = () => {
+            fontString[index] = `${number}px`;
+            context.font = fontString.join(" ");
+        };
+
+        const getTextWidth = (text: string) => context.measureText(text).width;
+
+        const getTextHeight = (text: string) => context.measureText(text).actualBoundingBoxAscent + context.measureText(text).actualBoundingBoxDescent;
+
+        if (getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {            
+            // decrease            
+            while(getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {
+                number--;
+                updateFont();
+            }
+        } else {
+            // increase
+            while(getTextWidth(text) < boxSize.width && getTextHeight(text) < boxSize.height) {
+                number++;
+                updateFont();
+            }
+            if (getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {
+                number--;
+            }
+        }
+        
+        context.restore();
+
+        return number;
     }
 }

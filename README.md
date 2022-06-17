@@ -213,10 +213,10 @@ Text(
 )
 ```
 
-To mesure a text you can use the `measureText` method. This static method returns the [`TextMetrics`](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) interface.
+To mesure a text you can use the `measure` method. This static method returns the [`TextMetrics`](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) interface.
 
 ```JavaScript
-Text.measureText(
+Text.measure(
     context: CanvasRenderingContext2D,
     text: string,
     font?: {
@@ -230,6 +230,26 @@ Text.measureText(
         lineHeight?: string
     }
 );
+```
+
+To fit text into a box use the `fitIntoBox` method. This static method returns a font size in pixels to fill in the box.
+
+```JavaScript
+fitIntoBox(
+    context: CanvasRenderingContext2D,
+    text: string,
+    boxSize: { width: number, height: number },
+    font?: {
+        family?: string,
+        size?: string, // in px
+        weight?: string,
+        style?: string,
+        kerning?: CanvasFontKerning,
+        stretch?: CanvasFontStretch,
+        variant?: CanvasFontVariantCaps,
+        lineHeight?: string
+    }
+)
 ```
 
 ## License (MIT)
