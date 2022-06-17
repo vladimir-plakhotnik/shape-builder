@@ -5,11 +5,7 @@ function drawingContext(context: CanvasRenderingContext2D, builder: Builder): vo
 }
 
 function svg(width: number, height: number, builder: Builder): string {
-    const elements = <Array<string>>[];
-
-    builder.shapes.forEach(shape => elements.push(shape.draw()));
-
-    return `<svg width="${width}" height="${height}">${elements.join("\n")}</svg>`;
+    return `<svg width="${width}" height="${height}">\n${builder.shapes.map(item => item.draw()).join("\n")}\n</svg>`;
 }
 export interface IBuilder {
     draw(width: number, height: number): string;

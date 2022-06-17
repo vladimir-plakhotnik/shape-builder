@@ -314,12 +314,35 @@ function svg$1(textObject) {
     if ((_r = (_q = textObject.options) === null || _q === void 0 ? void 0 : _q.font) === null || _r === void 0 ? void 0 : _r.kerning) {
         text += " font-kerning=\"".concat(textObject.options.font.kerning, "\"");
     }
-    if ((_t = (_s = textObject.options) === null || _s === void 0 ? void 0 : _s.text) === null || _t === void 0 ? void 0 : _t.align) {
-        var align = textObject.options.text.align === "center" ? "middle" : textObject.options.text.align;
-        text += " text-anchor=\"".concat(align, "\"");
+    // text align
+    switch ((_t = (_s = textObject.options) === null || _s === void 0 ? void 0 : _s.text) === null || _t === void 0 ? void 0 : _t.align) {
+        case "center":
+            text += " text-anchor=\"middle\"";
+            break;
+        case "left":
+        case "end":
+            text += " text-anchor=\"end\"";
+            break;
+        default:
+            text += " text-anchor=\"start\"";
     }
-    if ((_v = (_u = textObject.options) === null || _u === void 0 ? void 0 : _u.text) === null || _v === void 0 ? void 0 : _v.baseline) {
-        text += " dominant-baseline=\"".concat(textObject.options.text.baseline, "\"");
+    // text baseline
+    switch ((_v = (_u = textObject.options) === null || _u === void 0 ? void 0 : _u.text) === null || _v === void 0 ? void 0 : _v.baseline) {
+        case "top":
+        case "hanging":
+            text += " dominant-baseline=\"hanging\"";
+            break;
+        case "alphabetic":
+            text += " dominant-baseline=\"alphabetic\"";
+            break;
+        case "ideographic":
+            text += " dominant-baseline=\"ideographic\"";
+            break;
+        case "middle":
+            text += " dominant-baseline=\"middle\"";
+            break;
+        default:
+            text += " dominant-baseline=\"auto\"";
     }
     return "<text ".concat(text, ">").concat(textObject.text, "</text>");
 }
@@ -390,9 +413,7 @@ function drawingContext(context, builder) {
     builder.shapes.forEach(function (shape) { return shape.draw(context); });
 }
 function svg(width, height, builder) {
-    var elements = [];
-    builder.shapes.forEach(function (shape) { return elements.push(shape.draw()); });
-    return "<svg width=\"".concat(width, "\" height=\"").concat(height, "\">").concat(elements.join("\n"), "</svg>");
+    return "<svg width=\"".concat(width, "\" height=\"").concat(height, "\">\n").concat(builder.shapes.map(function (item) { return item.draw(); }).join("\n"), "\n</svg>");
 }
 var Builder = /** @class */ (function () {
     function Builder(shapes) {

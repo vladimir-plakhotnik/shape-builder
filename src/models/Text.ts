@@ -116,16 +116,39 @@ function svg(textObject: Text): string {
         text += ` font-kerning="${textObject.options.font.kerning}"`;
     }
 
-    if (textObject.options?.text?.align) {
-        const align = textObject.options.text.align === "center" ? "middle" :  textObject.options.text.align;
-        text += ` text-anchor="${align}"`;
+    // text align
+
+    switch(textObject.options?.text?.align) {
+    case "center":
+        text += " text-anchor=\"middle\"";
+        break;
+    case "left":
+    case "end":
+        text += " text-anchor=\"end\"";
+        break;
+    default:
+        text += " text-anchor=\"start\"";
     }
 
-    if (textObject.options?.text?.baseline) {
-        text += ` dominant-baseline="${textObject.options.text.baseline}"`;
+    // text baseline
+
+    switch(textObject.options?.text?.baseline) {
+    case "top":
+    case "hanging":
+        text += " dominant-baseline=\"hanging\"";
+        break;
+    case "alphabetic":
+        text += " dominant-baseline=\"alphabetic\"";
+        break;
+    case "ideographic":
+        text += " dominant-baseline=\"ideographic\"";
+        break;
+    case "middle":
+        text += " dominant-baseline=\"middle\"";
+        break;
+    default:
+        text += " dominant-baseline=\"auto\"";
     }
-
-
     
     return `<text ${text}>${textObject.text}</text>`;
 }
