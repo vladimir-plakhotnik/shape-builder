@@ -122,7 +122,7 @@ function svg(textObject: Text): string {
     case "center":
         text += " text-anchor=\"middle\"";
         break;
-    case "left":
+    case "right":
     case "end":
         text += " text-anchor=\"end\"";
         break;
