@@ -146,7 +146,19 @@ function drawingContext$3(context, rectangle) {
 }
 function svg$3(rectangle) {
     var _a, _b, _c, _d;
-    var rect = "x=\"".concat(rectangle.coordinates.x, "\" y=\"").concat(rectangle.coordinates.y, "\" width=\"").concat(rectangle.width, "\" height=\"").concat(rectangle.height, "\"");
+    var x = rectangle.coordinates.x;
+    var width = rectangle.width;
+    if (width < 0) {
+        x += rectangle.width;
+        width = Math.abs(width);
+    }
+    var y = rectangle.coordinates.y;
+    var height = rectangle.height;
+    if (height < 0) {
+        y += rectangle.height;
+        height = Math.abs(height);
+    }
+    var rect = "x=\"".concat(x, "\" y=\"").concat(y, "\" width=\"").concat(width, "\" height=\"").concat(height, "\"");
     if ((_a = rectangle.options) === null || _a === void 0 ? void 0 : _a.fillColor) {
         rect += " fill=\"".concat(rectangle.options.fillColor, "\"");
     }

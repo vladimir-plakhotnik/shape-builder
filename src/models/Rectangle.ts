@@ -32,7 +32,24 @@ function drawingContext(context: CanvasRenderingContext2D, rectangle: Rectangle)
 }
 
 function svg(rectangle: Rectangle): string {
-    let rect = `x="${rectangle.coordinates.x}" y="${rectangle.coordinates.y}" width="${rectangle.width}" height="${rectangle.height}"`;
+
+    let x = rectangle.coordinates.x;
+    let width = rectangle.width;
+
+    if (width < 0) {
+        x += rectangle.width;
+        width = Math.abs(width);
+    }
+
+    let y = rectangle.coordinates.y;
+    let height = rectangle.height;
+
+    if (height < 0) {
+        y += rectangle.height;
+        height = Math.abs(height);
+    }
+
+    let rect = `x="${x}" y="${y}" width="${width}" height="${height}"`;
 
     if (rectangle.options?.fillColor) {
         rect += ` fill="${rectangle.options.fillColor}"`;
