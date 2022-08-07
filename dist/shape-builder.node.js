@@ -2,7 +2,15 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+/**
+ * Point object is used to set a coordinate point
+ */
 var Point = /** @class */ (function () {
+    /**
+     * Creates an instance of a Point
+     * @param x X coordinate
+     * @param y Y coordinate
+     */
     function Point(x, y) {
         this.x = x;
         this.y = y;
@@ -43,7 +51,16 @@ function svg$5(lineObject) {
     }
     return "<line ".concat(line, " />");
 }
+/**
+ * Line shape
+ */
 var Line = /** @class */ (function () {
+    /**
+     * Creates an instance of a Line shape
+     * @param start Start point coordinate
+     * @param end End point coordinate
+     * @param options Line drawing options
+     */
     function Line(start, end, options) {
         this.start = start;
         this.end = end;
@@ -110,7 +127,15 @@ function svg$4(curve) {
     }
     return "<path ".concat(path, " />");
 }
+/**
+ * Curve shape
+ */
 var Curve = /** @class */ (function () {
+    /**
+     * Creates an instance of a Curve shape
+     * @param points Array of curve coordinate points
+     * @param options Curve drawing options
+     */
     function Curve(points, options) {
         this.points = points;
         this.options = options;
@@ -176,7 +201,17 @@ function svg$3(rectangle) {
     }
     return "<rect ".concat(rect, " />");
 }
+/**
+ * Rectangle shape
+ */
 var Rectangle = /** @class */ (function () {
+    /**
+     * Creates an instance of a Rectangle shape
+     * @param coordinates The coordinate of the upper left corner of Rectangle
+     * @param width Rectangle width
+     * @param height Rectangle height
+     * @param options Rectangle drawing options
+     */
     function Rectangle(coordinates, width, height, options) {
         this.coordinates = coordinates;
         this.width = width;
@@ -233,7 +268,16 @@ function svg$2(circleObject) {
     }
     return "<circle ".concat(circle, " />");
 }
+/**
+ * Circle shape
+ */
 var Circle = /** @class */ (function () {
+    /**
+     * Creates an instance of a Circle shape
+     * @param center Circle center coordinates
+     * @param radius Circle radius in degrees
+     * @param options Circle drawing options
+     */
     function Circle(center, radius, options) {
         this.center = center;
         this.radius = radius;
@@ -358,7 +402,16 @@ function svg$1(textObject) {
     }
     return "<text ".concat(text, ">").concat(textObject.text, "</text>");
 }
+/**
+ * Text shape
+ */
 var Text = /** @class */ (function () {
+    /**
+     * Creates an instance of a Text shape
+     * @param coordinates Text coordinates in a image
+     * @param text Text to draw in an image
+     * @param options Text drawing options
+     */
     function Text(coordinates, text, options) {
         this.coordinates = coordinates;
         this.text = text;
@@ -367,6 +420,13 @@ var Text = /** @class */ (function () {
     Text.prototype.draw = function (context) {
         return context ? drawingContext$1(context, this) : svg$1(this);
     };
+    /**
+     * Mesures a text
+     * @param context The image context
+     * @param text Text to draw in the image
+     * @param font Font description
+     * @returns A {@link https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics TextMetrics} object
+     */
     Text.measure = function (context, text, font) {
         if (font) {
             context.save();
@@ -378,6 +438,14 @@ var Text = /** @class */ (function () {
         }
         return result;
     };
+    /**
+     * Fits a text into a box
+     * @param context The image context
+     * @param text Text to draw in a box
+     * @param boxSize Size of box in image
+     * @param font Font description
+     * @returns Font size to fit a text into a box
+     */
     Text.fitIntoBox = function (context, text, boxSize, font) {
         context.save();
         if (font) {
@@ -427,16 +495,35 @@ function drawingContext(context, builder) {
 function svg(width, height, builder) {
     return "<svg width=\"".concat(width, "\" height=\"").concat(height, "\">\n").concat(builder.shapes.map(function (item) { return item.draw(); }).join("\n"), "\n</svg>");
 }
+/**
+ * Shape Builder
+ */
 var Builder = /** @class */ (function () {
+    /**
+     * Creates an instance of a Shape Builder
+     * @param shapes Shape array
+     */
     function Builder(shapes) {
-        this.shapes = shapes;
-    }
-    Builder.prototype.draw = function (width, height) {
-        if (typeof width === "function" || typeof width === "object") {
-            return drawingContext(width, this);
+        this.shapes = [];
+        if (shapes) {
+            this.shapes = shapes;
         }
-        if (typeof width === "number" && typeof height === "number") {
-            return svg(width, height, this);
+    }
+    /**
+     * Adds a shape
+     * @param shape A shape
+     * @returns The shape builder
+     */
+    Builder.prototype.addShape = function (shape) {
+        this.shapes.push(shape);
+        return this;
+    };
+    Builder.prototype.draw = function (widthOrContext, height) {
+        if (typeof widthOrContext === "function" || typeof widthOrContext === "object") {
+            return drawingContext(widthOrContext, this);
+        }
+        if (typeof widthOrContext === "number" && typeof height === "number") {
+            return svg(widthOrContext, height, this);
         }
         throw new TypeError("Wrong arguments.");
     };

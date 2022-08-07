@@ -22,32 +22,29 @@ The `dist` folder of this package contains files:
 ```JavaScript
 import { Point, Rectangle, Builder } from "shape-builder";
 
-// Add a shapes to a shape array
-const shapes = [];
-
-shapes.push(
-    new Rectangle(new Point(0, 0), 300, 300, {
-        fillColor: "lightskyblue",
-    })
-);
-
-shapes.push(
-    new Rectangle(new Point(10, 10), 180, 180, {
-        fillColor: "yellow",
-        borderColor: "orange",
-    })
-);
-
-// Create a shape builder
-const builder = new Builder(shapes);
-
-// Get context
+// Get a context
 const context = document.getElementById("canvas").getContext("2d");
 
-// Drawing shapes with canvas
-builder.draw(context);
+// Create a shape builder
+const builder = new Builder();
 
-// Or use SVG
+// Add the shapes
+builder
+    .addShape(
+        new Rectangle(new Point(0, 0), 300, 300, {
+            fillColor: "lightskyblue",
+        })
+    )
+    .addShape(
+        new Rectangle(new Point(10, 10), 180, 180, {
+            fillColor: "yellow",
+            borderColor: "orange",
+        })
+    )
+    // Draw the shapes in the image context
+    .draw(context);
+
+// or use svg
 const playground = document.getElementById("playground");
 
 playground.innerHTML = builder.draw(
@@ -67,9 +64,37 @@ new Rectangle(new Point(0, 0), 300, 300, {
 
 ```
 
+Another way to use the shape builder is to first create a shape array:
+
+```JavaScript
+
+// Add the shapes to a shape array
+const shapes = [];
+
+shapes.push(
+    new Rectangle(new Point(0, 0), 300, 300, {
+        fillColor: "lightskyblue",
+    })
+);
+
+shapes.push(
+    new Rectangle(new Point(10, 10), 180, 180, {
+        fillColor: "yellow",
+        borderColor: "orange",
+    })
+);
+
+// Create a shape builder
+const builder = new Builder(shapes);
+
+// Draw the shapes
+builder.draw(context);
+
+```
+
 The `Point` object is used to set a coordinate point. The image coordinates are counted from the top-left corner.
 
-See more examples in [`index.html`](index.html). To view the page in a browser, please clone the repo and run a server:
+See more examples in [`logo.js`](public/logo.js) and [`sine.js`](public/sine.js). To view the page in a browser, please clone the repo and run a server:
 
 ```bash
 npm start
@@ -92,31 +117,28 @@ const { Point, Rectangle, Builder } = require("shape-builder");
 const canvas = createCanvas(400, 400);
 const context = canvas.getContext("2d");
 
-// Add a shapes to a shape array
-const shapes = [];
-
-shapes.push(
-    new Rectangle(new Point(0, 0), 300, 300, {
-        fillColor: "lightskyblue",
-    })
-);
-
-shapes.push(
-    new Rectangle(new Point(10, 10), 180, 180, {
-        fillColor: "yellow",
-        borderColor: "orange",
-    })
-);
-
 // Create a shape builder
-const builder = new Builder(shapes);
+const builder = new Builder();
 
-// Drawing shapes with canvas
-builder.draw(context);
+// Add the shapes
+builder
+    .addShape(
+        new Rectangle(new Point(0, 0), 300, 300, {
+            fillColor: "lightskyblue",
+        })
+    )
+    .addShape(
+        new Rectangle(new Point(10, 10), 180, 180, {
+            fillColor: "yellow",
+            borderColor: "orange",
+        })
+    )
+    // Draw the shapes in the image context
+    .draw(context);
 
 console.log('<img src="' + canvas.toDataURL() + '" />');
 
-// Or use SVG
+// or use svg
 const svg = builder.draw(500, 500);
 
 console.log(svg);
@@ -232,7 +254,7 @@ Text.measure(
 );
 ```
 
-To fit text into a box use the `fitIntoBox` method. This static method returns a font size in pixels to fill in the box.
+To fit a text into a box use the `fitIntoBox` method. This static method returns a font size in pixels to fill the text in the box.
 
 ```JavaScript
 Text.fitIntoBox(

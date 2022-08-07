@@ -7,7 +7,7 @@ function drawingContext(context: CanvasRenderingContext2D, circle: Circle): void
     if (circle.options?.fillColor) {
         context.fillStyle = circle.options.fillColor;
     }
-    
+
     if (circle.options?.borderColor) {
         context.strokeStyle = circle.options.borderColor;
     }
@@ -15,7 +15,7 @@ function drawingContext(context: CanvasRenderingContext2D, circle: Circle): void
     if (circle.options?.thickness) {
         context.lineWidth = circle.options.thickness;
     }
-        
+
     if (circle.options?.dash) {
         context.setLineDash(circle.options.dash);
     }
@@ -23,7 +23,7 @@ function drawingContext(context: CanvasRenderingContext2D, circle: Circle): void
     context.beginPath();
 
     context.arc(
-        circle.center.x, 
+        circle.center.x,
         circle.center.y,
         circle.radius,
         0,
@@ -46,7 +46,7 @@ function svg(circleObject: Circle): string {
     let circle = `cx="${circleObject.center.x}" cy="${circleObject.center.y}" r="${circleObject.radius}"`;
 
     if (circleObject.options?.fillColor) {
-        circle += ` fill="${circleObject.options.fillColor}"`;            
+        circle += ` fill="${circleObject.options.fillColor}"`;
     } else {
         circle += " fill=\"none\"";
     }
@@ -58,7 +58,7 @@ function svg(circleObject: Circle): string {
     if (circleObject.options?.thickness) {
         circle += ` stroke-width="${circleObject.options.thickness}"`;
     }
-        
+
     if (circleObject.options?.dash) {
         circle += ` stroke-dasharray="${circleObject.options.dash.join(",")}"`;
     }
@@ -66,7 +66,16 @@ function svg(circleObject: Circle): string {
     return `<circle ${circle} />`;
 }
 
+/**
+ * Circle shape
+ */
 export default class Circle implements IDraw {
+    /**
+     * Creates an instance of a Circle shape
+     * @param center Circle center coordinates
+     * @param radius Circle radius in degrees 
+     * @param options Circle drawing options
+     */
     constructor(
         public readonly center: Point,
         public readonly radius: number,
@@ -76,11 +85,11 @@ export default class Circle implements IDraw {
             readonly thickness?: number,
             readonly dash?: number[],
         }
-    ) {}
+    ) { }
     draw(): string;
     draw(context: CanvasRenderingContext2D): void;
     draw(context?: CanvasRenderingContext2D): string | void {
-        return context ? drawingContext(context, this): svg(this);
+        return context ? drawingContext(context, this) : svg(this);
     }
-    
+
 }

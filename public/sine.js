@@ -17,56 +17,6 @@ export default function sine(context, playground, code) {
     playground.style.width = `${width}px`;
     playground.style.height = `${height}px`;
 
-    const shapes = [];
-
-    shapes.push(
-        new Line(new Point(width / 2, 0), new Point(width / 2, height), {
-            color: "lightskyblue",
-            dash: [5],
-        })
-    );
-
-    shapes.push(
-        new Text(new Point(width / 2 + height / 20 / 2, 0), "Y", {
-            font: {
-                family: "system-ui",
-                size: `${height / 20}px`,
-                weight: "bold",
-            },
-            text: {
-                align: "left",
-                baseline: "hanging",
-            },
-            color: "lightskyblue",
-        })
-    );
-
-    shapes.push(
-        new Line(new Point(0, height / 2), new Point(width, height / 2), {
-            color: "lightskyblue",
-            dash: [5],
-        })
-    );
-
-    shapes.push(
-        new Text(
-            new Point(width - height / 20, height / 2 - height / 20),
-            "X",
-            {
-                font: {
-                    family: "system-ui",
-                    size: `${height / 20}px`,
-                    weight: "bold",
-                },
-                text: {
-                    align: "left",
-                    baseline: "hanging",
-                },
-                color: "lightskyblue",
-            }
-        )
-    );
-
     const xOffset = width / (4 * Math.PI);
 
     const yOffset = height / 2;
@@ -84,33 +34,76 @@ export default function sine(context, playground, code) {
         );
     }
 
-    shapes.push(
-        new Curve(points, {
-            borderColor: "red",
-        })
-    );
+    const builder = new Builder();
 
-    shapes.push(
-        new Text(
-            new Point(width * (1 / 2 + 1 / 4), height * (1 / 5)),
-            "y = sin x",
-            {
+    builder
+        .addShape(
+            new Line(new Point(width / 2, 0), new Point(width / 2, height), {
+                color: "lightskyblue",
+                dash: [5],
+            })
+        )
+        .addShape(
+            new Text(new Point(width / 2 + height / 20 / 2, 0), "Y", {
                 font: {
                     family: "system-ui",
                     size: `${height / 20}px`,
+                    weight: "bold",
                 },
                 text: {
                     align: "left",
                     baseline: "hanging",
                 },
-                color: "red",
-            }
+                color: "lightskyblue",
+            })
         )
-    );
-
-    const builder = new Builder(shapes);
-
-    builder.draw(context);
+        .addShape(
+            new Line(new Point(0, height / 2), new Point(width, height / 2), {
+                color: "lightskyblue",
+                dash: [5],
+            })
+        )
+        .addShape(
+            new Text(
+                new Point(width - height / 20, height / 2 - height / 20),
+                "X",
+                {
+                    font: {
+                        family: "system-ui",
+                        size: `${height / 20}px`,
+                        weight: "bold",
+                    },
+                    text: {
+                        align: "left",
+                        baseline: "hanging",
+                    },
+                    color: "lightskyblue",
+                }
+            )
+        )
+        .addShape(
+            new Curve(points, {
+                borderColor: "red",
+            })
+        )
+        .addShape(
+            new Text(
+                new Point(width * (1 / 2 + 1 / 4), height * (1 / 5)),
+                "y = sin x",
+                {
+                    font: {
+                        family: "system-ui",
+                        size: `${height / 20}px`,
+                    },
+                    text: {
+                        align: "left",
+                        baseline: "hanging",
+                    },
+                    color: "red",
+                }
+            )
+        )
+        .draw(context);
 
     const svg = builder.draw(width, height);
 

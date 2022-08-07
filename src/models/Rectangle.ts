@@ -15,7 +15,7 @@ function drawingContext(context: CanvasRenderingContext2D, rectangle: Rectangle)
     if (rectangle.options?.thickness) {
         context.lineWidth = rectangle.options.thickness;
     }
-    
+
     if (rectangle.options?.dash) {
         context.setLineDash(rectangle.options.dash);
     }
@@ -23,10 +23,10 @@ function drawingContext(context: CanvasRenderingContext2D, rectangle: Rectangle)
     if (rectangle.options?.fillColor) {
         context.fillRect(rectangle.coordinates.x, rectangle.coordinates.y, rectangle.width, rectangle.height);
     }
-    
+
     if (rectangle.options?.borderColor) {
         context.strokeRect(rectangle.coordinates.x, rectangle.coordinates.y, rectangle.width, rectangle.height);
-    }    
+    }
 
     context.restore();
 }
@@ -72,10 +72,20 @@ function svg(rectangle: Rectangle): string {
     return `<rect ${rect} />`;
 }
 
+/**
+ * Rectangle shape
+ */
 export default class Rectangle implements IDraw {
+    /**
+     * Creates an instance of a Rectangle shape
+     * @param coordinates The coordinate of the upper left corner of Rectangle
+     * @param width Rectangle width
+     * @param height Rectangle height
+     * @param options Rectangle drawing options
+     */
     constructor(
         public readonly coordinates: Point,
-        public readonly width: number, 
+        public readonly width: number,
         public readonly height: number,
         public readonly options?: {
             readonly fillColor?: string,
@@ -83,11 +93,11 @@ export default class Rectangle implements IDraw {
             readonly thickness?: number,
             readonly dash?: number[],
         }
-    ) {}
+    ) { }
 
     public draw(): string;
     public draw(context: CanvasRenderingContext2D): void;
     public draw(context?: CanvasRenderingContext2D): string | void {
-        return context ? drawingContext(context, this): svg(this);
+        return context ? drawingContext(context, this) : svg(this);
     }
 }

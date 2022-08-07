@@ -28,7 +28,7 @@ function fontStyleToString(fontStyle: IFontStyle): string {
     }
     if (fontStyle.size) {
         font += `${fontStyle.size} `;
-    }    
+    }
     if (fontStyle.lineHeight) {
         font += `${fontStyle.lineHeight} `;
     }
@@ -53,7 +53,7 @@ function drawingContext(context: CanvasRenderingContext2D, text: Text): void {
         context.textAlign = text.options.text.align;
         context.textBaseline = text.options.text.baseline;
     }
-    
+
     if (text.options?.rotate) {
         context.translate(
             text.coordinates.x,
@@ -77,7 +77,7 @@ function drawingContext(context: CanvasRenderingContext2D, text: Text): void {
 
 function svg(textObject: Text): string {
     let text;
-        
+
     if (textObject.options?.rotate) {
         text = `x="0" y="0" transform="translate(${textObject.coordinates.x}, ${textObject.coordinates.y}) rotate(${textObject.options.rotate})"`;
     } else {
@@ -118,7 +118,7 @@ function svg(textObject: Text): string {
 
     // text align
 
-    switch(textObject.options?.text?.align) {
+    switch (textObject.options?.text?.align) {
     case "center":
         text += " text-anchor=\"middle\"";
         break;
@@ -132,7 +132,7 @@ function svg(textObject: Text): string {
 
     // text baseline
 
-    switch(textObject.options?.text?.baseline) {
+    switch (textObject.options?.text?.baseline) {
     case "top":
     case "hanging":
         text += " dominant-baseline=\"hanging\"";
@@ -149,11 +149,20 @@ function svg(textObject: Text): string {
     default:
         text += " dominant-baseline=\"auto\"";
     }
-    
+
     return `<text ${text}>${textObject.text}</text>`;
 }
 
+/**
+ * Text shape
+ */
 export default class Text implements IDraw {
+    /**
+     * Creates an instance of a Text shape
+     * @param coordinates Text coordinates in a image
+     * @param text Text to draw in an image
+     * @param options Text drawing options
+     */
     constructor(
         public readonly coordinates: Point,
         public readonly text: string,
@@ -166,14 +175,21 @@ export default class Text implements IDraw {
             },
             readonly rotate?: number
         }
-    ) {}
+    ) { }
 
     draw(): string;
     draw(context: CanvasRenderingContext2D): void;
     draw(context?: CanvasRenderingContext2D): string | void {
         return context ? drawingContext(context, this) : svg(this);
     }
-    
+
+    /**
+     * Mesures a text
+     * @param context The image context
+     * @param text Text to draw in the image
+     * @param font Font description
+     * @returns A {@link https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics TextMetrics} object 
+     */
     static measure(
         context: CanvasRenderingContext2D,
         text: string,
@@ -189,10 +205,18 @@ export default class Text implements IDraw {
         if (font) {
             context.restore();
         }
-        
+
         return result;
     }
 
+    /**
+     * Fits a text into a box 
+     * @param context The image context
+     * @param text Text to draw in a box
+     * @param boxSize Size of box in image
+     * @param font Font description
+     * @returns Font size to fit a text into a box
+     */
     static fitIntoBox(
         context: CanvasRenderingContext2D,
         text: string,
@@ -200,7 +224,7 @@ export default class Text implements IDraw {
         font?: IFontStyle
     ): number {
         context.save();
-    
+
         if (font) {
             context.font = fontStyleToString(font);
         }
@@ -212,9 +236,9 @@ export default class Text implements IDraw {
         if (index === -1) {
             throw new Error("Font size does not found in an image context");
         }
-        
+
         let number = parseInt(fontString[index]);
-    
+
         if (!number) {
             throw new Error("Font size does not found in an image context");
         }
@@ -228,15 +252,15 @@ export default class Text implements IDraw {
 
         const getTextHeight = (text: string) => context.measureText(text).actualBoundingBoxAscent + context.measureText(text).actualBoundingBoxDescent;
 
-        if (getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {            
+        if (getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {
             // decrease            
-            while(getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {
+            while (getTextWidth(text) > boxSize.width || getTextHeight(text) > boxSize.height) {
                 number--;
                 updateFont();
             }
         } else {
             // increase
-            while(getTextWidth(text) < boxSize.width && getTextHeight(text) < boxSize.height) {
+            while (getTextWidth(text) < boxSize.width && getTextHeight(text) < boxSize.height) {
                 number++;
                 updateFont();
             }
@@ -244,7 +268,7 @@ export default class Text implements IDraw {
                 number--;
             }
         }
-        
+
         context.restore();
 
         return number;

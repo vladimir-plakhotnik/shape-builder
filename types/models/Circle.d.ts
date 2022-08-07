@@ -1,5 +1,8 @@
 import { IDraw } from "./IDraw";
 import Point from "./Point";
+/**
+ * Circle shape
+ */
 export default class Circle implements IDraw {
     readonly center: Point;
     readonly radius: number;
@@ -9,6 +12,12 @@ export default class Circle implements IDraw {
         readonly thickness?: number;
         readonly dash?: number[];
     };
+    /**
+     * Creates an instance of a Circle shape
+     * @param center Circle center coordinates
+     * @param radius Circle radius in degrees
+     * @param options Circle drawing options
+     */
     constructor(center: Point, radius: number, options?: {
         readonly fillColor?: string;
         readonly borderColor?: string;
