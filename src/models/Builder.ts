@@ -24,6 +24,16 @@ export default class Builder implements IBuilder {
 
     /**
      * Adds a shape
+     * @param shape A shape
+     * @returns The shape builder
+     */
+    addShape(shape: IDraw) {
+        this.shapes.push(shape);
+        return this;
+    }
+
+    /**
+     * Adds a lot of shapes
      * @param shapes The shapes
      * @returns The shape builder
      */

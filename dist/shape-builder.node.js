@@ -505,6 +505,15 @@ var Builder = /** @class */ (function () {
     }
     /**
      * Adds a shape
+     * @param shape A shape
+     * @returns The shape builder
+     */
+    Builder.prototype.addShape = function (shape) {
+        this.shapes.push(shape);
+        return this;
+    };
+    /**
+     * Adds a lot of shapes
      * @param shapes The shapes
      * @returns The shape builder
      */

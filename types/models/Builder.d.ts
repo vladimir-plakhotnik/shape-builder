@@ -15,6 +15,12 @@ export default class Builder implements IBuilder {
     constructor(shapes?: IDraw[]);
     /**
      * Adds a shape
+     * @param shape A shape
+     * @returns The shape builder
+     */
+    addShape(shape: IDraw): this;
+    /**
+     * Adds a lot of shapes
      * @param shapes The shapes
      * @returns The shape builder
      */

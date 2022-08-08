@@ -30,17 +30,18 @@ const builder = new Builder();
 
 builder
     // Add the shapes
-    .addShapes(
+    .addShape(
         new Rectangle(new Point(0, 0), 300, 300, {
             fillColor: "lightskyblue",
         })
     )
-    .addShapes(
+    .addShape(
         new Rectangle(new Point(10, 10), 180, 180, {
             fillColor: "yellow",
             borderColor: "orange",
         })
     )
+
     // An alternative way to add the shapes
     // .addShapes(
     //     new Rectangle(new Point(0, 0), 300, 300, {
@@ -139,12 +140,12 @@ const builder = new Builder();
 
 builder
     // Add the shapes
-    .addShapes(
+    .addShape(
         new Rectangle(new Point(0, 0), 300, 300, {
             fillColor: "lightskyblue",
         })
     )
-    .addShapes(
+    .addShape(
         new Rectangle(new Point(10, 10), 180, 180, {
             fillColor: "yellow",
             borderColor: "orange",
