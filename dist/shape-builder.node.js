@@ -18,7 +18,7 @@ var Point = /** @class */ (function () {
     return Point;
 }());
 
-function drawingContext$5(context, line) {
+function drawingContext$4(context, line) {
     var _a, _b, _c;
     context.save();
     if ((_a = line.options) === null || _a === void 0 ? void 0 : _a.color) {
@@ -37,7 +37,7 @@ function drawingContext$5(context, line) {
     context.closePath();
     context.restore();
 }
-function svg$5(lineObject) {
+function svg$4(lineObject) {
     var _a, _b, _c;
     var line = "x1=\"".concat(lineObject.start.x, "\" y1=\"").concat(lineObject.start.y, "\" x2=\"").concat(lineObject.end.x, "\" y2=\"").concat(lineObject.end.y, "\"");
     if ((_a = lineObject.options) === null || _a === void 0 ? void 0 : _a.color) {
@@ -67,12 +67,12 @@ var Line = /** @class */ (function () {
         this.options = options;
     }
     Line.prototype.draw = function (context) {
-        return context ? drawingContext$5(context, this) : svg$5(this);
+        return context ? drawingContext$4(context, this) : svg$4(this);
     };
     return Line;
 }());
 
-function drawingContext$4(context, curve) {
+function drawingContext$3(context, curve) {
     var _a, _b, _c, _d, _e, _f;
     context.save();
     if ((_a = curve.options) === null || _a === void 0 ? void 0 : _a.fillColor) {
@@ -103,7 +103,7 @@ function drawingContext$4(context, curve) {
     context.closePath();
     context.restore();
 }
-function svg$4(curve) {
+function svg$3(curve) {
     var _a, _b, _c, _d;
     var path = "M".concat(curve.points[0].x, " ").concat(curve.points[0].y);
     for (var index = 1; index < curve.points.length; index++) {
@@ -141,12 +141,12 @@ var Curve = /** @class */ (function () {
         this.options = options;
     }
     Curve.prototype.draw = function (context) {
-        return context ? drawingContext$4(context, this) : svg$4(this);
+        return context ? drawingContext$3(context, this) : svg$3(this);
     };
     return Curve;
 }());
 
-function drawingContext$3(context, rectangle) {
+function drawingContext$2(context, rectangle) {
     var _a, _b, _c, _d, _e, _f;
     context.save();
     if ((_a = rectangle.options) === null || _a === void 0 ? void 0 : _a.fillColor) {
@@ -169,7 +169,7 @@ function drawingContext$3(context, rectangle) {
     }
     context.restore();
 }
-function svg$3(rectangle) {
+function svg$2(rectangle) {
     var _a, _b, _c, _d;
     var x = rectangle.coordinates.x;
     var width = rectangle.width;
@@ -219,12 +219,12 @@ var Rectangle = /** @class */ (function () {
         this.options = options;
     }
     Rectangle.prototype.draw = function (context) {
-        return context ? drawingContext$3(context, this) : svg$3(this);
+        return context ? drawingContext$2(context, this) : svg$2(this);
     };
     return Rectangle;
 }());
 
-function drawingContext$2(context, circle) {
+function drawingContext$1(context, circle) {
     var _a, _b, _c, _d, _e;
     context.save();
     if ((_a = circle.options) === null || _a === void 0 ? void 0 : _a.fillColor) {
@@ -248,7 +248,7 @@ function drawingContext$2(context, circle) {
     context.stroke();
     context.restore();
 }
-function svg$2(circleObject) {
+function svg$1(circleObject) {
     var _a, _b, _c, _d;
     var circle = "cx=\"".concat(circleObject.center.x, "\" cy=\"").concat(circleObject.center.y, "\" r=\"").concat(circleObject.radius, "\"");
     if ((_a = circleObject.options) === null || _a === void 0 ? void 0 : _a.fillColor) {
@@ -284,7 +284,7 @@ var Circle = /** @class */ (function () {
         this.options = options;
     }
     Circle.prototype.draw = function (context) {
-        return context ? drawingContext$2(context, this) : svg$2(this);
+        return context ? drawingContext$1(context, this) : svg$1(this);
     };
     return Circle;
 }());
@@ -314,7 +314,7 @@ function fontStyleToString(fontStyle) {
     }
     return font.trim();
 }
-function drawingContext$1(context, text) {
+function drawingContext(context, text) {
     var _a, _b, _c, _d;
     context.save();
     if ((_a = text.options) === null || _a === void 0 ? void 0 : _a.color) {
@@ -337,7 +337,7 @@ function drawingContext$1(context, text) {
     }
     context.restore();
 }
-function svg$1(textObject) {
+function svg(textObject) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
     var text;
     if ((_a = textObject.options) === null || _a === void 0 ? void 0 : _a.rotate) {
@@ -418,7 +418,7 @@ var Text = /** @class */ (function () {
         this.options = options;
     }
     Text.prototype.draw = function (context) {
-        return context ? drawingContext$1(context, this) : svg$1(this);
+        return context ? drawingContext(context, this) : svg(this);
     };
     /**
      * Mesures a text
@@ -489,18 +489,12 @@ var Text = /** @class */ (function () {
     return Text;
 }());
 
-function drawingContext(context, builder) {
-    builder.shapes.forEach(function (shape) { return shape.draw(context); });
-}
-function svg(width, height, builder) {
-    return "<svg width=\"".concat(width, "\" height=\"").concat(height, "\">\n").concat(builder.shapes.map(function (item) { return item.draw(); }).join("\n"), "\n</svg>");
-}
 /**
- * Shape Builder
+ * Shape builder
  */
 var Builder = /** @class */ (function () {
     /**
-     * Creates an instance of a Shape Builder
+     * Creates an instance of a shape builder
      * @param shapes Shape array
      */
     function Builder(shapes) {
@@ -511,19 +505,38 @@ var Builder = /** @class */ (function () {
     }
     /**
      * Adds a shape
-     * @param shape A shape
+     * @param shapes The shapes
      * @returns The shape builder
      */
-    Builder.prototype.addShape = function (shape) {
-        this.shapes.push(shape);
+    Builder.prototype.addShapes = function () {
+        var _a;
+        var shapes = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            shapes[_i] = arguments[_i];
+        }
+        (_a = this.shapes).push.apply(_a, shapes);
+        return this;
+    };
+    /**
+     * Remove shapes from a shape builder
+     * @param quantity A quantity of shapes. Removes all shapes if the quantity is skipped
+     * @returns The shape builder
+     */
+    Builder.prototype.removeShapes = function (quantity) {
+        if (quantity && this.shapes.length > quantity) {
+            this.shapes = this.shapes.slice(0, this.shapes.length - quantity);
+        }
+        else {
+            this.shapes = [];
+        }
         return this;
     };
     Builder.prototype.draw = function (widthOrContext, height) {
         if (typeof widthOrContext === "function" || typeof widthOrContext === "object") {
-            return drawingContext(widthOrContext, this);
+            return this.shapes.forEach(function (shape) { return shape.draw(widthOrContext); });
         }
         if (typeof widthOrContext === "number" && typeof height === "number") {
-            return svg(widthOrContext, height, this);
+            return "<svg width=\"".concat(widthOrContext, "\" height=\"").concat(height, "\">\n").concat(this.shapes.map(function (item) { return item.draw(); }).join("\n"), "\n</svg>");
         }
         throw new TypeError("Wrong arguments.");
     };

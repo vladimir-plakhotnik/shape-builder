@@ -21,18 +21,14 @@ export default function logo(context, playground, code) {
     const builder = new Builder();
 
     builder
-        .addShape(
+        .addShapes(
             new Rectangle(new Point(0, 0), width, height, {
                 fillColor: "lightskyblue",
-            })
-        )
-        .addShape(
+            }),
             new Circle(new Point(width / 2, height / 2), width / 2, {
                 fillColor: "yellow",
                 borderColor: "orange",
-            })
-        )
-        .addShape(
+            }),
             new Curve(
                 [
                     new Point(width / 2, height),
@@ -49,21 +45,15 @@ export default function logo(context, playground, code) {
                 {
                     fillColor: "orange",
                 }
-            )
-        )
-        .addShape(
+            ),
             new Circle(new Point(width / 1.8, height / 1.8), width / 6, {
                 borderColor: "lightgreen",
                 thickness: 10,
-            })
-        )
-        .addShape(
+            }),
             new Rectangle(new Point(width / 4, height / 5), width / 4, height / 6, {
                 borderColor: "lightpink",
                 thickness: 10,
-            })
-        )
-        .addShape(
+            }),
             new Text(new Point(width / 2.2, height / 2.1), "shape-builder.js", {
                 font: {
                     family: "monospace",
@@ -78,8 +68,6 @@ export default function logo(context, playground, code) {
             })
         )
         .draw(context);
-
-    console.log(builder)
 
     const svg = builder.draw(width, height);
 

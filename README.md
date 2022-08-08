@@ -28,19 +28,35 @@ const context = document.getElementById("canvas").getContext("2d");
 // Create a shape builder
 const builder = new Builder();
 
-// Add the shapes
 builder
-    .addShape(
+    // Add the shapes
+    .addShapes(
         new Rectangle(new Point(0, 0), 300, 300, {
             fillColor: "lightskyblue",
         })
     )
-    .addShape(
+    .addShapes(
         new Rectangle(new Point(10, 10), 180, 180, {
             fillColor: "yellow",
             borderColor: "orange",
         })
     )
+    // An alternative way to add the shapes
+    // .addShapes(
+    //     new Rectangle(new Point(0, 0), 300, 300, {
+    //         fillColor: "lightskyblue",
+    //     }),
+    //     new Rectangle(new Point(10, 10), 180, 180, {
+    //         fillColor: "yellow",
+    //         borderColor: "orange",
+    //     })
+    // )
+
+    // Remove last shape if needed
+    // .removeShapes(1)
+    // or remove all shapes
+    // .removeShapes()
+
     // Draw the shapes in the image context
     .draw(context);
 
@@ -120,14 +136,15 @@ const context = canvas.getContext("2d");
 // Create a shape builder
 const builder = new Builder();
 
-// Add the shapes
+
 builder
-    .addShape(
+    // Add the shapes
+    .addShapes(
         new Rectangle(new Point(0, 0), 300, 300, {
             fillColor: "lightskyblue",
         })
     )
-    .addShape(
+    .addShapes(
         new Rectangle(new Point(10, 10), 180, 180, {
             fillColor: "yellow",
             borderColor: "orange",

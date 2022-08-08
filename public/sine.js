@@ -37,13 +37,13 @@ export default function sine(context, playground, code) {
     const builder = new Builder();
 
     builder
-        .addShape(
+        .addShapes(
             new Line(new Point(width / 2, 0), new Point(width / 2, height), {
                 color: "lightskyblue",
                 dash: [5],
             })
         )
-        .addShape(
+        .addShapes(
             new Text(new Point(width / 2 + height / 20 / 2, 0), "Y", {
                 font: {
                     family: "system-ui",
@@ -57,13 +57,13 @@ export default function sine(context, playground, code) {
                 color: "lightskyblue",
             })
         )
-        .addShape(
+        .addShapes(
             new Line(new Point(0, height / 2), new Point(width, height / 2), {
                 color: "lightskyblue",
                 dash: [5],
             })
         )
-        .addShape(
+        .addShapes(
             new Text(
                 new Point(width - height / 20, height / 2 - height / 20),
                 "X",
@@ -81,12 +81,12 @@ export default function sine(context, playground, code) {
                 }
             )
         )
-        .addShape(
+        .addShapes(
             new Curve(points, {
                 borderColor: "red",
             })
         )
-        .addShape(
+        .addShapes(
             new Text(
                 new Point(width * (1 / 2 + 1 / 4), height * (1 / 5)),
                 "y = sin x",

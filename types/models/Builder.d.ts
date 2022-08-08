@@ -4,21 +4,27 @@ export interface IBuilder {
     draw(context: CanvasRenderingContext2D): void;
 }
 /**
- * Shape Builder
+ * Shape builder
  */
 export default class Builder implements IBuilder {
-    readonly shapes: IDraw[];
+    private shapes;
     /**
-     * Creates an instance of a Shape Builder
+     * Creates an instance of a shape builder
      * @param shapes Shape array
      */
     constructor(shapes?: IDraw[]);
     /**
      * Adds a shape
-     * @param shape A shape
+     * @param shapes The shapes
      * @returns The shape builder
      */
-    addShape(shape: IDraw): this;
+    addShapes(...shapes: IDraw[]): this;
+    /**
+     * Remove shapes from a shape builder
+     * @param quantity A quantity of shapes. Removes all shapes if the quantity is skipped
+     * @returns The shape builder
+     */
+    removeShapes(quantity?: number): this;
     /**
      * SVG image code
      * @param width Image width
