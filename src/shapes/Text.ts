@@ -2,37 +2,6 @@ import { IFontStyle, IDraw } from "../interfaces";
 import type Point from "./Point";
 
 /**
- * Converts font style object to string
- * @param fontStyle Font style object
- * @returns Font style string
- */
-function fontStyleToString(fontStyle: IFontStyle): string {
-    let font = "";
-    if (fontStyle.style) {
-        font = `${fontStyle.style} `;
-    }
-    if (fontStyle.variant) {
-        font += `${fontStyle.variant} `;
-    }
-    if (fontStyle.weight) {
-        font += `${fontStyle.weight} `;
-    }
-    if (fontStyle.stretch) {
-        font += `${fontStyle.stretch} `;
-    }
-    if (fontStyle.size) {
-        font += `${fontStyle.size} `;
-    }
-    if (fontStyle.lineHeight) {
-        font += `${fontStyle.lineHeight} `;
-    }
-    if (fontStyle.family) {
-        font += `${fontStyle.family}`;
-    }
-    return font.trim();
-}
-
-/**
  * Draws a text in a context
  * @param context Image context
  * @param textShape Text shape
@@ -45,7 +14,7 @@ function drawingContext(context: CanvasRenderingContext2D, textShape: Text): voi
     }
 
     if (textShape.options?.font) {
-        context.font = fontStyleToString(textShape.options.font);
+        context.font = Text.fontStyleToString(textShape.options.font);
     }
 
     if (textShape.options?.text) {
@@ -208,7 +177,7 @@ export default class Text implements IDraw {
     ): TextMetrics {
         if (font) {
             context.save();
-            context.font = fontStyleToString(font);
+            context.font = Text.fontStyleToString(font);
         }
 
         const result = context.measureText(text);
@@ -237,7 +206,7 @@ export default class Text implements IDraw {
         context.save();
 
         if (font) {
-            context.font = fontStyleToString(font);
+            context.font = Text.fontStyleToString(font);
         }
 
         const fontString = context.font.split(" ");
@@ -283,5 +252,36 @@ export default class Text implements IDraw {
         context.restore();
 
         return number;
+    }
+
+    /**
+     * Converts font style object to string
+     * @param fontStyle Font style object
+     * @returns Font style string
+     */
+    static fontStyleToString(fontStyle: IFontStyle): string {
+        let font = "";
+        if (fontStyle.style) {
+            font = `${fontStyle.style} `;
+        }
+        if (fontStyle.variant) {
+            font += `${fontStyle.variant} `;
+        }
+        if (fontStyle.weight) {
+            font += `${fontStyle.weight} `;
+        }
+        if (fontStyle.stretch) {
+            font += `${fontStyle.stretch} `;
+        }
+        if (fontStyle.size) {
+            font += `${fontStyle.size} `;
+        }
+        if (fontStyle.lineHeight) {
+            font += `${fontStyle.lineHeight} `;
+        }
+        if (fontStyle.family) {
+            font += `${fontStyle.family}`;
+        }
+        return font.trim();
     }
 }

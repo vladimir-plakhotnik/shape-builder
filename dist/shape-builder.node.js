@@ -3,69 +3,6 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 /**
- * Shape builder
- */
-var Builder = /** @class */ (function () {
-    /**
-     * Creates an instance of a shape builder
-     * @param shapes Shape array
-     */
-    function Builder(shapes) {
-        this.shapes = [];
-        if (shapes) {
-            this.shapes = shapes;
-        }
-    }
-    /**
-     * Adds a shape
-     * @param shape A shape
-     * @returns The shape builder
-     */
-    Builder.prototype.addShape = function (shape) {
-        this.shapes.push(shape);
-        return this;
-    };
-    /**
-     * Adds a lot of shapes
-     * @param shapes The shapes
-     * @returns The shape builder
-     */
-    Builder.prototype.addShapes = function () {
-        var _a;
-        var shapes = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            shapes[_i] = arguments[_i];
-        }
-        (_a = this.shapes).push.apply(_a, shapes);
-        return this;
-    };
-    /**
-     * Remove shapes from a shape builder
-     * @param quantity A quantity of shapes. Removes all shapes if the quantity is skipped
-     * @returns The shape builder
-     */
-    Builder.prototype.removeShapes = function (quantity) {
-        if (quantity && this.shapes.length > quantity) {
-            this.shapes = this.shapes.slice(0, this.shapes.length - quantity);
-        }
-        else {
-            this.shapes = [];
-        }
-        return this;
-    };
-    Builder.prototype.draw = function (widthOrContext, height) {
-        if (typeof widthOrContext === "function" || typeof widthOrContext === "object") {
-            return this.shapes.forEach(function (shape) { return shape.draw(widthOrContext); });
-        }
-        if (typeof widthOrContext === "number" && typeof height === "number") {
-            return "<svg width=\"".concat(widthOrContext, "\" height=\"").concat(height, "\">\n").concat(this.shapes.map(function (item) { return item.draw(); }).join("\n"), "\n</svg>");
-        }
-        throw new TypeError("Wrong arguments.");
-    };
-    return Builder;
-}());
-
-/**
  * Draws a circle in a context
  * @param context Image context
  * @param circleShape Circle shape
@@ -409,36 +346,6 @@ var Rectangle = /** @class */ (function () {
 }());
 
 /**
- * Converts font style object to string
- * @param fontStyle Font style object
- * @returns Font style string
- */
-function fontStyleToString(fontStyle) {
-    var font = "";
-    if (fontStyle.style) {
-        font = "".concat(fontStyle.style, " ");
-    }
-    if (fontStyle.variant) {
-        font += "".concat(fontStyle.variant, " ");
-    }
-    if (fontStyle.weight) {
-        font += "".concat(fontStyle.weight, " ");
-    }
-    if (fontStyle.stretch) {
-        font += "".concat(fontStyle.stretch, " ");
-    }
-    if (fontStyle.size) {
-        font += "".concat(fontStyle.size, " ");
-    }
-    if (fontStyle.lineHeight) {
-        font += "".concat(fontStyle.lineHeight, " ");
-    }
-    if (fontStyle.family) {
-        font += "".concat(fontStyle.family);
-    }
-    return font.trim();
-}
-/**
  * Draws a text in a context
  * @param context Image context
  * @param textShape Text shape
@@ -450,7 +357,7 @@ function drawingContext(context, textShape) {
         context.fillStyle = textShape.options.color;
     }
     if ((_b = textShape.options) === null || _b === void 0 ? void 0 : _b.font) {
-        context.font = fontStyleToString(textShape.options.font);
+        context.font = Text.fontStyleToString(textShape.options.font);
     }
     if ((_c = textShape.options) === null || _c === void 0 ? void 0 : _c.text) {
         context.textAlign = textShape.options.text.align;
@@ -564,7 +471,7 @@ var Text = /** @class */ (function () {
     Text.measure = function (context, text, font) {
         if (font) {
             context.save();
-            context.font = fontStyleToString(font);
+            context.font = Text.fontStyleToString(font);
         }
         var result = context.measureText(text);
         if (font) {
@@ -583,7 +490,7 @@ var Text = /** @class */ (function () {
     Text.fitIntoBox = function (context, text, boxSize, font) {
         context.save();
         if (font) {
-            context.font = fontStyleToString(font);
+            context.font = Text.fontStyleToString(font);
         }
         var fontString = context.font.split(" ");
         var index = fontString.findIndex(function (item) { return /\d+px/.test(item.trim()); });
@@ -620,8 +527,52 @@ var Text = /** @class */ (function () {
         context.restore();
         return number;
     };
+    /**
+     * Converts font style object to string
+     * @param fontStyle Font style object
+     * @returns Font style string
+     */
+    Text.fontStyleToString = function (fontStyle) {
+        var font = "";
+        if (fontStyle.style) {
+            font = "".concat(fontStyle.style, " ");
+        }
+        if (fontStyle.variant) {
+            font += "".concat(fontStyle.variant, " ");
+        }
+        if (fontStyle.weight) {
+            font += "".concat(fontStyle.weight, " ");
+        }
+        if (fontStyle.stretch) {
+            font += "".concat(fontStyle.stretch, " ");
+        }
+        if (fontStyle.size) {
+            font += "".concat(fontStyle.size, " ");
+        }
+        if (fontStyle.lineHeight) {
+            font += "".concat(fontStyle.lineHeight, " ");
+        }
+        if (fontStyle.family) {
+            font += "".concat(fontStyle.family);
+        }
+        return font.trim();
+    };
     return Text;
 }());
+
+var index$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    Circle: Circle,
+    Curve: Curve,
+    Line: Line,
+    Point: Point,
+    Rectangle: Rectangle,
+    Text: Text
+});
+
+var index = /*#__PURE__*/Object.freeze({
+    __proto__: null
+});
 
 /**
  * Transform Record Object
@@ -698,22 +649,71 @@ var Transform = /** @class */ (function () {
     return Transform;
 }());
 
-var index$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    Builder: Builder,
-    Circle: Circle,
-    Curve: Curve,
-    Line: Line,
-    Point: Point,
-    Rectangle: Rectangle,
-    Text: Text,
-    Transform: Transform
-});
+/**
+ * Shape builder
+ */
+var Builder = /** @class */ (function () {
+    /**
+     * Creates an instance of a shape builder
+     * @param shapes Shape array
+     */
+    function Builder(shapes) {
+        this.shapes = [];
+        if (shapes) {
+            this.shapes = shapes;
+        }
+    }
+    /**
+     * Adds a shape
+     * @param shape A shape
+     * @returns The shape builder
+     */
+    Builder.prototype.addShape = function (shape) {
+        this.shapes.push(shape);
+        return this;
+    };
+    /**
+     * Adds a lot of shapes
+     * @param shapes The shapes
+     * @returns The shape builder
+     */
+    Builder.prototype.addShapes = function () {
+        var _a;
+        var shapes = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            shapes[_i] = arguments[_i];
+        }
+        (_a = this.shapes).push.apply(_a, shapes);
+        return this;
+    };
+    /**
+     * Remove shapes from a shape builder
+     * @param quantity A quantity of shapes. Removes all shapes if the quantity is skipped
+     * @returns The shape builder
+     */
+    Builder.prototype.removeShapes = function (quantity) {
+        if (quantity && this.shapes.length > quantity) {
+            this.shapes = this.shapes.slice(0, this.shapes.length - quantity);
+        }
+        else {
+            this.shapes = [];
+        }
+        return this;
+    };
+    Builder.prototype.draw = function (widthOrContext, height) {
+        if (typeof widthOrContext === "function" || typeof widthOrContext === "object") {
+            return this.shapes.forEach(function (shape) { return shape.draw(widthOrContext); });
+        }
+        if (typeof widthOrContext === "number" && typeof height === "number") {
+            return "<svg width=\"".concat(widthOrContext, "\" height=\"").concat(height, "\">\n").concat(this.shapes.map(function (item) { return item.draw(); }).join("\n"), "\n</svg>");
+        }
+        throw new TypeError("Wrong arguments.");
+    };
+    return Builder;
+}());
 
-var index = /*#__PURE__*/Object.freeze({
-    __proto__: null
-});
-
+exports.Builder = Builder;
+exports.Transform = Transform;
 exports.interfaces = index;
-exports.models = index$1;
+exports.shapes = index$1;
 //# sourceMappingURL=shape-builder.node.js.map

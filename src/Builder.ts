@@ -1,4 +1,4 @@
-import type { IBuilder, IDraw } from "../interfaces";
+import type { IBuilder, IDraw } from "./interfaces";
 
 /**
  * Shape builder

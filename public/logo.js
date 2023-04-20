@@ -1,11 +1,6 @@
-import {
-    Point,
-    Rectangle,
-    Circle,
-    Builder,
-    Curve,
-    Text,
-} from "../dist/shape-builder.min.js";
+import { shapes, Builder } from "../dist/shape-builder.min.js";
+
+const { Point, Rectangle, Circle, Curve, Text } = shapes;
 
 export default function logo(context, playground, code) {
     const width = context.canvas.clientWidth;

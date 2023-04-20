@@ -1,10 +1,6 @@
-import {
-    Point,
-    Builder,
-    Curve,
-    Text,
-    Line,
-} from "../dist/shape-builder.min.js";
+import { shapes, Builder } from "../dist/shape-builder.min.js";
+
+const { Point, Curve, Text, Line } = shapes;
 
 export default function sine(context, playground, code) {
     const width = context.canvas.clientWidth;

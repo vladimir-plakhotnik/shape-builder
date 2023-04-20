@@ -20,7 +20,9 @@ The `dist` folder of this package contains files:
 ## Usage
 
 ```JavaScript
-import { Point, Rectangle, Builder } from "shape-builder";
+import { Builder, shapes } from "shape-builder";
+
+const { Point, Rectangle } = shapes;
 
 // Get a context
 const context = document.getElementById("canvas").getContext("2d");
@@ -86,15 +88,15 @@ Another way to use the shape builder is to first create a shape array:
 ```JavaScript
 
 // Add the shapes to a shape array
-const shapes = [];
+const shapeArray = [];
 
-shapes.push(
+shapeArray.push(
     new Rectangle(new Point(0, 0), 300, 300, {
         fillColor: "lightskyblue",
     })
 );
 
-shapes.push(
+shapeArray.push(
     new Rectangle(new Point(10, 10), 180, 180, {
         fillColor: "yellow",
         borderColor: "orange",
@@ -129,14 +131,15 @@ The following code shows an example of usage the `node-canvas` and the `shape-bu
 
 ```JavaScript
 const { createCanvas } = require("canvas");
-const { Point, Rectangle, Builder } = require("shape-builder");
+const { shapes, Builder } = require("shape-builder");
+
+const { Point, Rectangle } = shapes;
 
 const canvas = createCanvas(400, 400);
 const context = canvas.getContext("2d");
 
 // Create a shape builder
 const builder = new Builder();
-
 
 builder
     // Add the shapes
@@ -253,7 +256,7 @@ Text(
 )
 ```
 
-To mesure a text you can use the `measure` method. This static method returns the [`TextMetrics`](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) interface.
+To measure a text you can use the `measure` method. This static method returns the [`TextMetrics`](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) interface.
 
 ```JavaScript
 Text.measure(
