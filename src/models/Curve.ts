@@ -1,6 +1,11 @@
-import { IDraw } from "./IDraw";
+import type { IDraw } from "../interfaces";
 import Point from "./Point";
 
+/**
+ * Draws a curve in a context
+ * @param context Image context
+ * @param curve Curve shape
+ */
 function drawingContext(context: CanvasRenderingContext2D, curve: Curve): void {
     context.save();
 
@@ -21,9 +26,7 @@ function drawingContext(context: CanvasRenderingContext2D, curve: Curve): void {
 
     const start = new Point(curve.points[0].x, curve.points[0].y);
 
-
     context.beginPath();
-
 
     context.moveTo(start.x, start.y);
 
@@ -45,6 +48,11 @@ function drawingContext(context: CanvasRenderingContext2D, curve: Curve): void {
     context.restore();
 }
 
+/**
+ * Creates SVG image code of a curve
+ * @param curve Curve shape
+ * @returns SVG image code of a curve
+ */
 function svg(curve: Curve): string {
     let path = `M${curve.points[0].x} ${curve.points[0].y}`;
 
@@ -94,7 +102,14 @@ export default class Curve implements IDraw {
         }
     ) { }
 
+    /**
+     * Creates SVG image code of a curve
+     */
     draw(): string;
+    /**
+     * Draws a curve in a context
+     * @param context Image context
+     */
     draw(context: CanvasRenderingContext2D): void;
     draw(context?: CanvasRenderingContext2D): string | void {
         return context ? drawingContext(context, this) : svg(this);

@@ -1,15 +1,5 @@
-import { IDraw } from "./IDraw";
-import Point from "./Point";
-export interface IFontStyle {
-    family?: string;
-    size?: string;
-    weight?: string;
-    style?: string;
-    kerning?: CanvasFontKerning;
-    stretch?: CanvasFontStretch;
-    variant?: CanvasFontVariantCaps;
-    lineHeight?: string;
-}
+import { IFontStyle, IDraw } from "../interfaces";
+import type Point from "./Point";
 /**
  * Text shape
  */
@@ -40,10 +30,17 @@ export default class Text implements IDraw {
         };
         readonly rotate?: number;
     });
+    /**
+     * Creates SVG image code of a text
+     */
     draw(): string;
+    /**
+     * Creates SVG image code of a text
+     * @param context Image context
+     */
     draw(context: CanvasRenderingContext2D): void;
     /**
-     * Mesures a text
+     * Measures a text
      * @param context The image context
      * @param text Text to draw in the image
      * @param font Font description

@@ -1,5 +1,5 @@
-import Point from "./Point";
-import { IDraw } from "./IDraw";
+import type { IDraw } from "../interfaces/IDraw";
+import type Point from "./Point";
 /**
  * Rectangle shape
  */
@@ -26,6 +26,13 @@ export default class Rectangle implements IDraw {
         readonly thickness?: number;
         readonly dash?: number[];
     });
+    /**
+     * Creates SVG image code of a rectangle
+     */
     draw(): string;
+    /**
+     *  Creates SVG image code of a rectangle
+     * @param context Image context
+     */
     draw(context: CanvasRenderingContext2D): void;
 }

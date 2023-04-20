@@ -1,8 +1,4 @@
-import { IDraw } from "./IDraw";
-export interface IBuilder {
-    draw(width: number, height: number): string;
-    draw(context: CanvasRenderingContext2D): void;
-}
+import type { IBuilder, IDraw } from "../interfaces";
 /**
  * Shape builder
  */
@@ -32,7 +28,7 @@ export default class Builder implements IBuilder {
      */
     removeShapes(quantity?: number): this;
     /**
-     * SVG image code
+     * Creates SVG image code
      * @param width Image width
      * @param height Image height
      */

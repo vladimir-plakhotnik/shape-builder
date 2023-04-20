@@ -1,6 +1,9 @@
+/**
+ * Draw Interface
+ */
 export interface IDraw {
     /**
-     * Returns SVG image code 
+     * Returns SVG image code
      */
     draw(): string;
     /**

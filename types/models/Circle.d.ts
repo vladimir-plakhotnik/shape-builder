@@ -1,4 +1,4 @@
-import { IDraw } from "./IDraw";
+import type { IDraw } from "../interfaces";
 import Point from "./Point";
 /**
  * Circle shape
@@ -24,6 +24,13 @@ export default class Circle implements IDraw {
         readonly thickness?: number;
         readonly dash?: number[];
     });
+    /**
+     * Creates SVG image code of a circle
+     */
     draw(): string;
+    /**
+     * Draws a circle in a context
+     * @param context Image context
+     */
     draw(context: CanvasRenderingContext2D): void;
 }

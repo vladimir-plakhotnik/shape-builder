@@ -1,5 +1,5 @@
-import Point from "./Point";
-import { IDraw } from "./IDraw";
+import type { IDraw } from "../interfaces";
+import type Point from "./Point";
 /**
  * Line shape
  */
@@ -22,6 +22,13 @@ export default class Line implements IDraw {
         readonly thickness?: number;
         readonly dash?: number[];
     });
+    /**
+     * Creates SVG image code of a line
+     */
     draw(): string;
+    /**
+     * Draws a line in a context
+     * @param context Image context
+     */
     draw(context: CanvasRenderingContext2D): void;
 }

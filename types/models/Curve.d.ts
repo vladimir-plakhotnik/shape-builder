@@ -1,4 +1,4 @@
-import { IDraw } from "./IDraw";
+import type { IDraw } from "../interfaces";
 import Point from "./Point";
 /**
  * Curve shape
@@ -22,6 +22,13 @@ export default class Curve implements IDraw {
         readonly thickness?: number;
         readonly dash?: number[];
     });
+    /**
+     * Creates SVG image code of a curve
+     */
     draw(): string;
+    /**
+     * Draws a curve in a context
+     * @param context Image context
+     */
     draw(context: CanvasRenderingContext2D): void;
 }

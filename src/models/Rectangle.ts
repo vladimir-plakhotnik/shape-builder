@@ -1,6 +1,11 @@
-import Point from "./Point";
-import { IDraw } from "./IDraw";
+import type { IDraw } from "../interfaces/IDraw";
+import type Point from "./Point";
 
+/**
+ * Draws a rectangle in a context
+ * @param context Image context
+ * @param rectangle Rectangle shape
+ */
 function drawingContext(context: CanvasRenderingContext2D, rectangle: Rectangle): void {
     context.save();
 
@@ -31,6 +36,11 @@ function drawingContext(context: CanvasRenderingContext2D, rectangle: Rectangle)
     context.restore();
 }
 
+/**
+ * Creates SVG image code of a rectangle
+ * @param rectangle Rectangle shape
+ * @returns SVG image code of a rectangle
+ */
 function svg(rectangle: Rectangle): string {
 
     let x = rectangle.coordinates.x;
@@ -95,7 +105,14 @@ export default class Rectangle implements IDraw {
         }
     ) { }
 
+    /**
+     * Creates SVG image code of a rectangle
+     */
     public draw(): string;
+    /**
+     *  Creates SVG image code of a rectangle
+     * @param context Image context
+     */
     public draw(context: CanvasRenderingContext2D): void;
     public draw(context?: CanvasRenderingContext2D): string | void {
         return context ? drawingContext(context, this) : svg(this);

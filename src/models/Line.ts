@@ -1,26 +1,31 @@
-import Point from "./Point";
-import { IDraw } from "./IDraw";
+import type { IDraw } from "../interfaces";
+import type Point from "./Point";
 
-function drawingContext(context: CanvasRenderingContext2D, line: Line): void {
+/**
+ * Draws a line in a context
+ * @param context Image context
+ * @param lineShape Line shape
+ */
+function drawingContext(context: CanvasRenderingContext2D, lineShape: Line): void {
     context.save();
 
-    if (line.options?.color) {
-        context.strokeStyle = line.options.color;
+    if (lineShape.options?.color) {
+        context.strokeStyle = lineShape.options.color;
     }
 
-    if (line.options?.thickness) {
-        context.lineWidth = line.options.thickness;
+    if (lineShape.options?.thickness) {
+        context.lineWidth = lineShape.options.thickness;
     }
 
-    if (line.options?.dash) {
-        context.setLineDash(line.options.dash);
+    if (lineShape.options?.dash) {
+        context.setLineDash(lineShape.options.dash);
     }
 
     context.beginPath();
 
-    context.moveTo(line.start.x, line.start.y);
+    context.moveTo(lineShape.start.x, lineShape.start.y);
 
-    context.lineTo(line.end.x, line.end.y);
+    context.lineTo(lineShape.end.x, lineShape.end.y);
 
     context.stroke();
 
@@ -29,19 +34,24 @@ function drawingContext(context: CanvasRenderingContext2D, line: Line): void {
     context.restore();
 }
 
-function svg(lineObject: Line): string {
-    let line = `x1="${lineObject.start.x}" y1="${lineObject.start.y}" x2="${lineObject.end.x}" y2="${lineObject.end.y}"`;
+/**
+ * Creates SVG image code of a line
+ * @param lineShape Line shape
+ * @returns SVG image code of a line
+ */
+function svg(lineShape: Line): string {
+    let line = `x1="${lineShape.start.x}" y1="${lineShape.start.y}" x2="${lineShape.end.x}" y2="${lineShape.end.y}"`;
 
-    if (lineObject.options?.color) {
-        line += ` stroke="${lineObject.options.color}"`;
+    if (lineShape.options?.color) {
+        line += ` stroke="${lineShape.options.color}"`;
     }
 
-    if (lineObject.options?.thickness) {
-        line += ` stroke-width="${lineObject.options.thickness}"`;
+    if (lineShape.options?.thickness) {
+        line += ` stroke-width="${lineShape.options.thickness}"`;
     }
 
-    if (lineObject.options?.dash) {
-        line += ` stroke-dasharray="${lineObject.options.dash.join(",")}"`;
+    if (lineShape.options?.dash) {
+        line += ` stroke-dasharray="${lineShape.options.dash.join(",")}"`;
     }
 
     return `<line ${line} />`;
@@ -67,7 +77,14 @@ export default class Line implements IDraw {
         }
     ) { }
 
+    /**
+     * Creates SVG image code of a line
+     */
     draw(): string;
+    /**
+     * Draws a line in a context
+     * @param context Image context
+     */
     draw(context: CanvasRenderingContext2D): void;
     draw(context?: CanvasRenderingContext2D): string | void {
         return context ? drawingContext(context, this) : svg(this);
